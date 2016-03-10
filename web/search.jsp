@@ -16,10 +16,11 @@
         <input type="submit" value="Search">
         </div>
          
-         
+         <%=  request.getParameter("email") %>
+         <%=  request.getParameter("userEmail") %>
          
      <sql:query var="listUsers"   dataSource="${myDS}">
-         SELECT * FROM users WHERE email='<%=  request.getParameter("userEmail") %>';
+         SELECT * FROM users WHERE email LIKE '<%=  request.getParameter("email") %>';
     </sql:query>
 
         <table    style="background-color:#FFFFFF" width="500" cellpadding="3" cellspacing="3">
