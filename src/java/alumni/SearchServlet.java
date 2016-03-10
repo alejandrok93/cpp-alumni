@@ -7,31 +7,18 @@ package alumni;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alejandrok
  */
-public class RegisterServlet extends HttpServlet {
+public class SearchServlet extends HttpServlet {
 
-    Controller ctrl = new Controller();
-    
-    String firstName;
-    String lastName;
-    String diplomaLastName;
-    String email;
-    String password;
-    String password2;
-    String graduationYear;
-    String degree;
-    String major;
-    
- 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,45 +30,17 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-          String error = "";
-     
-            
-        if (firstName.equals("") || firstName.equals("")) {
-            error += "Name cannot be left blank.  ";
-        
-        }
-       
-        if (ctrl.doesEmailExist(email)) {
-            error += "Email already exists.";
+        response.setContentType("text/html;charset=UTF-8");
+          String email = request.getParameter("userEmail");
+        HttpSession session = request.getSession();
+          synchronized(session) {
+            session.setAttribute("name", email);
         }
         
+        response.setHeader("userEmail", email);
         
-        if (diplomaLastName.equals("")) {  
-            diplomaLastName = lastName;
-        }
+        response.sendRedirect("search.jsp");
         
-        if (password.equals("") || password2.equals("")) {
-            error += "Please enter a password.  ";
-        }
-        
-        if (!password.equals(password2)) {
-            error += "Passwords are not equal. Please Try again.  ";
-           
-        }
-        
-        
-        if (error.isEmpty()) {
-        ctrl.registerUser(firstName, lastName,  email, password, graduationYear, degree, major);
-        response.sendRedirect("log_in.jsp");
-        }
-        
-        else {
-       
-            response.sendRedirect("sign_up.jsp?error=" + error);
-            
-            
-        }
         
     }
 
@@ -111,30 +70,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-    
-        firstName = request.getParameter("firstName");
-        lastName = request.getParameter("lastName");
-        diplomaLastName = request.getParameter("lastNameDiploma");
-        email = request.getParameter("email");
-        password = request.getParameter("password");
-        password2 = request.getParameter("password2");
-        graduationYear = request.getParameter("yearGraduated");
-        degree = request.getParameter("degree");
-        major = request.getParameter("major");
-        
-        
-        System.out.println(firstName);
-        System.out.println(lastName);
-        System.out.println(diplomaLastName);
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(password2);
-        System.out.println(degree);
-        System.out.println(major);
-    
         processRequest(request, response);
-    
     }
 
     /**

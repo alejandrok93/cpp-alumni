@@ -7,31 +7,29 @@ package alumni;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alejandrok
  */
-public class RegisterServlet extends HttpServlet {
-
-    Controller ctrl = new Controller();
+public class UpdateAccountServlet extends HttpServlet {
     
-    String firstName;
-    String lastName;
-    String diplomaLastName;
-    String email;
-    String password;
-    String password2;
-    String graduationYear;
+    Controller ctrl = new Controller();
+    String phone;
+    String desc;
+    String employer;
+    String position;
+    String workPhone;
+    String institution;
     String degree;
     String major;
-    
- 
+    String graduationYear;
+            
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,45 +41,46 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-          String error = "";
-     
-            
-        if (firstName.equals("") || firstName.equals("")) {
-            error += "Name cannot be left blank.  ";
-        
-        }
        
-        if (ctrl.doesEmailExist(email)) {
-            error += "Email already exists.";
+        HttpSession session = request.getSession();
+        
+        
+        System.out.println("req.getparameter  : " + request.getParameter("type"));
+        String t = request.getParameter("type").toString();
+        System.out.println(" t : " + t);
+        
+        
+        if (t.equals("personal_info")) {
+        //UPDATE PERSONAL INFO
+        phone = request.getParameter("phone");
+        desc = request.getParameter("desc");
+        
+        String email = (String) session.getAttribute("email");
+        ctrl.updatePersonalInfo(email, phone, desc);
+        response.sendRedirect("profile.jsp");
+        
+        }
+        
+        if (t.equals("work_info")) {
+        //UPDATE WORK INFO
+        employer = request.getParameter("employer");
+        position = request.getParameter("position");
+        workPhone = request.getParameter("workPhone");
+        
+        String email = (String) session.getAttribute("email");
+        ctrl.updateWorkInfo(email, employer, position, workPhone);
+        response.sendRedirect("profile.jsp");
         }
         
         
-        if (diplomaLastName.equals("")) {  
-            diplomaLastName = lastName;
+        if (t.equals("education_info")) {
+        //UPDATE EDUCATION INFO
+        institution = request.getParameter("institution");
+        degree = request.getParameter("degree");
+        major = request.getParameter("major");
+        graduationYear = request.getParameter("graduationYear");
         }
         
-        if (password.equals("") || password2.equals("")) {
-            error += "Please enter a password.  ";
-        }
-        
-        if (!password.equals(password2)) {
-            error += "Passwords are not equal. Please Try again.  ";
-           
-        }
-        
-        
-        if (error.isEmpty()) {
-        ctrl.registerUser(firstName, lastName,  email, password, graduationYear, degree, major);
-        response.sendRedirect("log_in.jsp");
-        }
-        
-        else {
-       
-            response.sendRedirect("sign_up.jsp?error=" + error);
-            
-            
-        }
         
     }
 
@@ -111,30 +110,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-    
-        firstName = request.getParameter("firstName");
-        lastName = request.getParameter("lastName");
-        diplomaLastName = request.getParameter("lastNameDiploma");
-        email = request.getParameter("email");
-        password = request.getParameter("password");
-        password2 = request.getParameter("password2");
-        graduationYear = request.getParameter("yearGraduated");
-        degree = request.getParameter("degree");
-        major = request.getParameter("major");
-        
-        
-        System.out.println(firstName);
-        System.out.println(lastName);
-        System.out.println(diplomaLastName);
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(password2);
-        System.out.println(degree);
-        System.out.println(major);
-    
         processRequest(request, response);
-    
     }
 
     /**

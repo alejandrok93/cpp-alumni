@@ -1,25 +1,16 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>Register</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <style>
-            .container {
-                margin: 10%;
-            }
-            </style>
-            
-    </head>
-    <body>
-        <div class="container">
+<%-- 
+    Document   : sign_up
+    Created on : Mar 8, 2016, 10:35:12 PM
+    Author     : James
+--%>
+
+<%@include file="header_notlog.jsp" %>
+
+<div class="container">
             <h2 class="page-header text-center">CPP Alunmi Network</h2>
+            
+        <%@include file="error.jsp" %>
+            
              <h2 class="form-signin-heading">Register: </h2>
             <form action="RegisterServlet" method="POST"  >
                <div class="form-group">
@@ -88,6 +79,6 @@ and open the template in the editor.
             </form>
             
         </div>
-        
-    </body>
-</html>
+
+<br>
+<%@include file="footer.jsp" %>
