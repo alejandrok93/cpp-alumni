@@ -12,7 +12,7 @@
         var="myDS"
         driver="com.mysql.jdbc.Driver"
         url="jdbc:mysql://localhost:3306/cpp-alumni"
-        user="alejandro" password="Test123"
+        user="root" password="sesame"
     />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%-- 

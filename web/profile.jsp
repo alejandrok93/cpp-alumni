@@ -14,11 +14,11 @@
     </sql:query>
       
             <sql:query var="usersWork"   dataSource="${myDS}">
-        SELECT * FROM employment  WHERE user_id = '<%=  session.getAttribute("email") %>';
+        SELECT * FROM employment INNER JOIN users ON employment.user_id=users.id WHERE user_id=(SELECT id FROM users WHERE email='<%=  session.getAttribute("email") %>');
     </sql:query>
         
           <sql:query var="usersEducation"   dataSource="${myDS}">
-               SELECT * FROM education WHERE user_id = '<%=  session.getAttribute("email") %>';
+               SELECT * FROM education INNER JOIN users ON education.user_id=users.id WHERE user_id=(SELECT id FROM users WHERE email='<%=  session.getAttribute("email") %>');
         
     </sql:query>
 <h1 class="h1 text-center">Profile Information</h1>
