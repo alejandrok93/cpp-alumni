@@ -60,9 +60,14 @@ img {
     <ul class="nav navbar-nav">
       <li><a href="home.jsp">Home</a></li>
       <li><a href="index.jsp">Logout</a></li>
-      <li><a href="search.jsp">Search</a></li>
+      
       <li><a href="profile.jsp">Profile</a></li>
       <li><a href="#">Friends</a></li>
+      <li>
+    <form action="SearchServlet" method="POST">
+        <input type="text" name="userEmail">
+        <input type="submit" value="Search">
+    </form></li>
     </ul>
   </div>
 </nav>
